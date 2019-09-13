@@ -1,13 +1,14 @@
 # Start with a base image containing Java runtime
 FROM openjdk:8-jdk-alpine
 # Add Maintainer Info
-MAINTAINER MetaRing <info@metaring.com>
+MAINTAINER hhovhann <haik.hovhanisyan@gmail.com>
 # Create directory and add permission to all
-RUN mkdir -p /webapp && chmod 777 -R /app
+RUN mkdir -p /app
+#RUN mkdir -p /app && chmod 777 -R /app
 # Defined environment variable
 ENV DIRPATH /tmp
 ## Add a wordking direcotry pointing to /tmp
-WORKDIR /webapp
+WORKDIR /app
 # Add a volume pointing to /tmp
 VOLUME $DIRPATH
 # The application's jar file

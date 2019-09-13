@@ -2,17 +2,17 @@
 spring-boot-docker
 
 # Build docker image
-mvn dockerfile:build
+mvn docker-compose:build
 
 # Run docker container
-docker run -p 8080:8080 -t hhovhann/spring-boot-docker:latest
+mvn docker-compose:up
 
 NOTE: Please make sure that have installed docker desktop on your local machine
 
 # Short commands list for containers/images/volumes
 
 ### List all containers (only IDs)
-docker ps -aq -all  
+docker ps -aq   
 ### List all images 
 docker images ls
 ### List all volumes
@@ -33,3 +33,11 @@ docker rmi image_id1 image_id2 - delete image(s)
 docker inspect image_id
 ### Inspect the container
 docker inspect container_id
+
+### verify records in Mongo
+docker exec -i -t hhovhann-mongo /bin/bash 
+root@ff55937c3772:/# mongo
+root@ff55937c3772:/# show dbs
+root@ff55937c3772:/# use local
+root@ff55937c3772:/# db.users.find()
+

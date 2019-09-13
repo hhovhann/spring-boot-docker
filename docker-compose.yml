@@ -1,0 +1,60 @@
+version: "3.7"
+services:
+  mongo-service:
+    image: mongo
+    container_name: hhovhann-mongo
+    volumes:
+      - db-data:/data/db
+      - db-data:/data/configdb
+#    environment:
+#      MONGO_ROOT_PASSWORD: somepassword
+#      MONGO_DATABASE: database
+#      MONGO_USER: user
+#      MONGO_PASSWORD: password
+#      MONGO_DATA_DIR: /data/db
+#      MONGO_LOG_DIR: /dev/null
+    networks:
+      - backend
+    ports:
+      - "27017:27017"
+    restart: always
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+
+  web-service:
+    # replace username/repo:tag with your name and image details
+    image: hhovhann/spring-boot-docker:latest
+    container_name: hhovhann-webapp
+    build:
+      context: .
+      args:
+        JAR_FILE: ${JAR_FILE}
+        APPLICATION_PROPERTIES_FILE: ${APPLICATION_PROPERTIES_FILE}
+    ports:
+      - "8080:8080"
+    working_dir: /app
+    networks:
+      - backend
+    depends_on:
+      - mongo-service
+    restart: always
+#    configs:
+#      - my_config
+#      - my_other_config
+
+#  configs:
+#    APPLICATION_PROPERTIES_CONFIG:
+#      file: ./target/classes/application.properties
+#    METARING_CONFIGURATION_FILE:
+#      file: ./target/classes/metaring.config.json
+#    FF4J_FEATURES_CONFIGURATION_FILE:
+#      file: ./target/classes/ff4j-features.xml
+#    my_other_config:
+#      external: true
+
+# Networks to be created to facilitate communication between containers
+networks:
+  backend:
+
+# Volumes
+volumes:
+  db-data:
