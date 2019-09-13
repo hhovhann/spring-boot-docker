@@ -51,7 +51,6 @@
                     <composeFile>${project.basedir}/docker-compose.yml</composeFile>
                     <envVars>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-                        <APPLICATION_PROPERTIES_FILE>target/classes/application.properties</APPLICATION_PROPERTIES_FILE>
                     </envVars>
                 </configuration>
             </plugin>

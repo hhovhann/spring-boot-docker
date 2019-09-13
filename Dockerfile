@@ -13,10 +13,8 @@ WORKDIR /app
 VOLUME $DIRPATH
 # The application's jar file
 ARG JAR_FILE
-ARG APPLICATION_PROPERTIES_FILE
 # Copy
 COPY ${JAR_FILE} app.jar
-COPY ${APPLICATION_PROPERTIES_FILE} application.properties
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 # Run the jar file
