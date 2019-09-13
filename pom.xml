@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.8.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/> <!-- lookup parent from com.hhovhann.springbootdocker.repository -->
     </parent>
     <groupId>com.hhovhann</groupId>
     <artifactId>spring-boot-docker</artifactId>
@@ -15,8 +15,10 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
+        <ff4j.version>1.8.1</ff4j.version>
         <docker.image.prefix>hhovhann</docker.image.prefix>
         <java.version>1.8</java.version>
+        <springboot.version>2.1.8.RELEASE</springboot.version>
     </properties>
 
     <dependencies>
@@ -24,16 +26,31 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ff4j</groupId>
+            <artifactId>ff4j-spring-boot-starter</artifactId>
+            <version>${ff4j.version}</version>
+        </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.ff4j/ff4j-core &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.ff4j</groupId>-->
+<!--            <artifactId>ff4j-core</artifactId>-->
+<!--            <version>${ff4j.version}</version>-->
+<!--        </dependency>-->
 
+        <dependency>
+            <groupId>org.ff4j</groupId>
+            <artifactId>ff4j-store-mongodb-v3</artifactId>
+            <version>${ff4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.dkanejs.maven.plugins</groupId>
-            <artifactId>docker-compose-maven-plugin</artifactId>
-            <version>2.5.1</version>
         </dependency>
     </dependencies>
 

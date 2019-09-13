@@ -15,7 +15,7 @@ VOLUME $DIRPATH
 ARG JAR_FILE
 # Copy
 COPY ${JAR_FILE} app.jar
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
+## Make port 8080 available to the world outside this container
+#EXPOSE 8080
 # Run the jar file
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
+ENTRYPOINT ["java","-Dspring.data.mongodb.uri=mongodb://hhovhann-mongo:27017/docker", "-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
