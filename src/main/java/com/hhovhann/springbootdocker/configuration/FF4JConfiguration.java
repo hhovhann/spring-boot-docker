@@ -21,17 +21,16 @@ public class FF4JConfiguration {
 
     @Bean
     public FF4j getFF4j() {
-        FF4j ff4j = new FF4j("ff4j-features.xml");
-//        FF4j ff4j = new FF4j().autoCreate(true);
+        FF4j ff4j = new FF4j().autoCreate(true);
         // Define Connectivity to DB (see with authorization - Using Mongo Driver
-//        MongoClient mongoClient = new MongoClient(databaseConnectionHost, databaseConnectionPort);
+        MongoClient mongoClient = new MongoClient(databaseConnectionHost, databaseConnectionPort);
         // Using Spring-data-mongodb
-//        MongoDatabase mongoDatabase = mongoClient.getDatabase("ff4j");
-//        ff4j.setFeatureStore(new FeatureStoreMongo(mongoDatabase.getCollection("ff4j_features"), "ff4j-features.xml"));
-//        ff4j.setPropertiesStore(new PropertyStoreMongo(mongoDatabase.getCollection("ff4j_properties"), "ff4j-features.xml"));
+        MongoDatabase mongoDatabase = mongoClient.getDatabase("ff4j");
+        ff4j.setFeatureStore(new FeatureStoreMongo(mongoDatabase.getCollection("ff4j_features"), "ff4j-features.xml"));
+        ff4j.setPropertiesStore(new PropertyStoreMongo(mongoDatabase.getCollection("ff4j_properties"), "ff4j-features.xml"));
         // Enable audit
-//        ff4j.setEventRepository(new EventRepositoryMongo(mongoClient, "ff4j"));
-//        ff4j.audit(true);
+        ff4j.setEventRepository(new EventRepositoryMongo(mongoClient, "ff4j"));
+        ff4j.audit(true);
         // Enable Cache Proxy
         ff4j.cache(new InMemoryCacheManager());
         return ff4j;
