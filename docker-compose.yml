@@ -12,10 +12,10 @@ services:
       - "27017:27017"
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080"]
-      interval: 1m30s
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/docker --quiet 1
+      interval: 10s
       timeout: 10s
-      retries: 3
+      retries: 5
       start_period: 40s
 
   web-service:
