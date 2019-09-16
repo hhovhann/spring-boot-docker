@@ -35,7 +35,7 @@ docker inspect image_id
 docker inspect container_id
 
 ### verify records in Mongo
-docker exec -i -t hhovhann-mongo /bin/bash 
+docker exec -i -t hhovhann-mongo-service /bin/bash 
 root@ff55937c3772:/# mongo
 root@ff55937c3772:/# show dbs
 root@ff55937c3772:/# use local

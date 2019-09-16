@@ -1,8 +1,8 @@
 version: "3.7"
 services:
-  mongo-service:
+  hhovhann-mongo-service:
     image: mongo
-    container_name: hhovhann-mongo
+    container_name: hhovhann-mongo-service
     volumes:
       - db-data:/data/db
       - db-data:/data/configdb
@@ -12,27 +12,31 @@ services:
       - "27017:27017"
     restart: always
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/docker --quiet 1
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/ff4j || --quiet 1
       interval: 10s
       timeout: 10s
       retries: 5
       start_period: 40s
 
-  web-service:
+  hhovhann-web-service:
     # replace username/repo:tag with your name and image details
     image: hhovhann/spring-boot-docker:latest
-    container_name: hhovhann-webapp
+    container_name: hhovhann-web-service
     build:
       context: .
       args:
         JAR_FILE: ${JAR_FILE}
+        APPLICATION_PROPERTIES_FILE: ${APPLICATION_PROPERTIES_FILE}
+        META_RING_CONFIGURATION_FILE: ${META_RING_CONFIGURATION_FILE}
     ports:
       - "8080:8080"
-    working_dir: /app
+    working_dir: /usr/src/app
+    volumes:
+      - web-data:/usr/src/app
     networks:
       - backend
-    links:
-      - mongo-service
+    depends_on:
+      - hhovhann-mongo-service
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
@@ -40,13 +44,13 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-#    configs:
-#      - APPLICATION_PROPERTIES_FILE
-#
-#configs:
-#  APPLICATION_PROPERTIES_FILE:
-#    file: ${APPLICATION_PROPERTIES_FILE}
+    secrets:
+      # This will keep application.properties file under run/secrets/APPLICATION_PROPERTIES_FILE
+      - APPLICATION_PROPERTIES_FILE
 
+secrets:
+  APPLICATION_PROPERTIES_FILE:
+    file: ${APPLICATION_PROPERTIES_FILE}
 # Networks to be created to facilitate communication between containers
 networks:
   backend:
@@ -54,3 +58,4 @@ networks:
 # Volumes
 volumes:
   db-data:
+  web-data:

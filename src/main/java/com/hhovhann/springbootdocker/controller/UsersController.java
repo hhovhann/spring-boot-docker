@@ -28,7 +28,7 @@ public class UsersController {
         if (ff4j.check("addUserFeature")) {
             return "User added into Mongo DB Repository: " + usersService.addUser(name, lastName, email);
         } else {
-            return "Mongo Repository Disabled";
+            return "Mongo DB Repository Disabled";
         }
     }
 
